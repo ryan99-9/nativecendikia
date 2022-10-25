@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {Text, ScrollView, Image, FlatList, View} from 'react-native';
+import {
+  Text,
+  ScrollView,
+  Image,
+  FlatList,
+  View,
+  Dimensions,
+  StatusBar,
+} from 'react-native';
 import {
   Avatar,
   Button,
@@ -9,12 +17,27 @@ import {
   Title,
 } from 'react-native-paper';
 // import axios from "axios";
-
+const {width, height} = Dimensions.get('screen');
+const imageW = width * 0.7;
+const imageH = imageW * 1.54;
+const data = [
+  'https://www.thecompleteuniversityguide.co.uk/commimg-cug/myhotcourses/blog/rich/myhc_81263.jpg',
+  'https://online.essex.ac.uk/wp-content/uploads/2016/06/OldBlog_16_FB.png',
+  'https://www.managementstudyhq.com/wp-content/uploads/2020/05/Study-Marketing.jpg',
+];
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       nama: 'dummy',
+      carouselData: [
+        // '../asset:/dummy_carousel1.jpg',
+        // '../aasset:/dummy_carousel2.jpg',
+        // '../asset:/dummy_carousel3.jpg'
+        'https://www.thecompleteuniversityguide.co.uk/commimg-cug/myhotcourses/blog/rich/myhc_81263.jpg',
+        'https://online.essex.ac.uk/wp-content/uploads/2016/06/OldBlog_16_FB.png',
+        'https://www.managementstudyhq.com/wp-content/uploads/2020/05/Study-Marketing.jpg',
+      ],
     };
   }
   render() {
@@ -65,6 +88,31 @@ class Home extends Component {
         </View>
         {/* Bar Atas */}
         {/* Carousel */}
+        <Text style={{margin: 20, fontSize: 20, fontWeight: 'bold'}}>
+          Information
+        </Text>
+        <View style={{flex: 1, backgroundColor: '#0000'}}>
+          <FlatList
+            data={this.state.carouselData}
+            keyExtractor={(_, index) => index.toString()}
+            horizontal
+            pagingEnabled
+            renderItem={({item}) => {
+              return (
+                <View style={{justifyContent: 'center', alignItems: 'center',padding:10}}>
+                  <Image
+                    source={{uri: item}}
+                    style={{
+                      width: imageW,
+                      height: imageH,
+                      resizeMode: 'cover',
+                    }}
+                  />
+                </View>
+              );
+            }}
+          />
+        </View>
         {/* Carousel */}
 
         <Text style={{margin: 20, fontSize: 20, fontWeight: 'bold'}}>
@@ -85,7 +133,6 @@ class Home extends Component {
               <Button>Apply</Button>
             </Card.Actions>
           </Card>
-          
         </View>
         <View>
           <Card
@@ -102,7 +149,6 @@ class Home extends Component {
               <Button>Observe Here</Button>
             </Card.Actions>
           </Card>
-          
         </View>
         <View>
           <Card
@@ -119,7 +165,6 @@ class Home extends Component {
               <Button>See Now </Button>
             </Card.Actions>
           </Card>
-          
         </View>
       </ScrollView>
     );
