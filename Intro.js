@@ -9,11 +9,11 @@ class Intro extends Component {
       <View>
         <Image
           style={{
-            height: '45%',
-            width: '100%',
+            height: '40%',
+            width: '80%',
             marginTop: '50%',
             marginBottom: '10%',
-            marginHorizontal: '0%',
+            marginHorizontal: '10%',
           }}
           source={require('./asset/homee.png')}
         />
@@ -30,9 +30,10 @@ class Intro extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               padding: 10,
-              borderRadius: 10,
+              borderRadius: 20,
               backgroundColor: '#065B87',
-              marginBottom:5
+              marginBottom:5,
+              borderColor:'#065B87', borderWidth:1
             }}
             onPress={() => this.props.navigation.navigate('Login')}
             >
@@ -44,7 +45,7 @@ class Intro extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               padding: 10,
-              borderRadius: 10,
+              borderRadius: 20,
               backgroundColor: 'white',
               borderColor:'#065B87', borderWidth:1
             }}

@@ -45,7 +45,7 @@ class Home extends Component {
               width:'100%',
               alignItems:'center',
               padding:20,
-              borderRadius:20,
+              borderRadius:40,
             }}>
           <TextInput
             label="Nama"
@@ -83,13 +83,14 @@ class Home extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               padding: 10,
-              borderRadius: 10,
+              borderRadius: 20,
               backgroundColor: '#065B87',
-              marginTop:30
+              marginTop:30,
+              borderColor:'#065B87', borderWidth:1
             }}
             onPress={() => this.props.navigation.navigate('Login')}
             >
-            <Text style={{color:'white'}}>Masuk</Text>
+            <Text style={{color:'white'}}>Daftar</Text>
           </TouchableOpacity>
             </View>
         </View>
