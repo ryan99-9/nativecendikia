@@ -1,61 +1,53 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  ScrollView,
-  Image,
-  FlatList,
-  View,
-  Dimensions,
-  StatusBar,
-  ImageBackground,
-} from 'react-native';
-import {
-  Avatar,
-  Button,
-  Card,
-  IconButton,
-  Paragraph,
-  Title,
-} from 'react-native-paper';
-// import axios from "axios";
+import {Text,ScrollView,Image,FlatList,View,Dimensions,ImageBackground} from 'react-native';
+import {Button,Card} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Axios from 'axios'
 const {width, height} = Dimensions.get('screen');
 const imageW = width * 0.7;
 const imageH = imageW * 1.54;
-const data = [
-  'https://www.thecompleteuniversityguide.co.uk/commimg-cug/myhotcourses/blog/rich/myhc_81263.jpg',
-  'https://online.essex.ac.uk/wp-content/uploads/2016/06/OldBlog_16_FB.png',
-  'https://www.managementstudyhq.com/wp-content/uploads/2020/05/Study-Marketing.jpg',
-];
+var data =[];
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nama: 'dummy',
+      nama: "dummy",
+      data:[],
+      token:'',
       carouselData: [
-        // '../asset/dummy_carousel1.jpg',
-        // '../aasset/dummy_carousel2.jpg',
-        // '../asset/dummy_carousel3.jpg',
-        [require('../asset/iklan23.jpg'),`Promo Menarik Bulan Juni, daftarkan segera`],
-        [require('../asset/iklan4.jpg'),`Text2`],
-        [require('../asset/iklan12.jpg'),`Text3`],
-        [require('../asset/iklan33.jpg'),`Text4`],
+        [require('../asset/iklan23.jpg'),''],
+        [require('../asset/iklan4.jpg'),''],
+        [require('../asset/iklan12.jpg'),""],
+        [require('../asset/iklan33.jpg'),""],
         // 'https://www.thecompleteuniversityguide.co.uk/commimg-cug/myhotcourses/blog/rich/myhc_81263.jpg',
         // 'https://online.essex.ac.uk/wp-content/uploads/2016/06/OldBlog_16_FB.png',
         // 'https://www.managementstudyhq.com/wp-content/uploads/2020/05/Study-Marketing.jpg',
       ],
     };
   }
+  componentDidMount(){
+    AsyncStorage.getItem('token',(err,res)=>{
+      Axios.get(`https://admin.menujudigital.com/api/teks`,{headers: {
+        Authorization: `Bearer ${res}`
+      }}).then(res =>{
+        this.setState({carouselData:[
+          [require('../asset/iklan23.jpg'),res.data[0].teks],
+          [require('../asset/iklan4.jpg'),res.data[1].teks],
+          [require('../asset/iklan12.jpg'),res.data[2].teks],
+          [require('../asset/iklan33.jpg'),res.data[3].teks],
+        ]})
+      })
+    })
+
+  }
+
+
   render() {
     return (
       <ScrollView>
         {/* Bar Atas */}
         <View
-          style={{
-            backgroundColor: '#065B87',
-            width: '100%',
-            height: 150,
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
+          style={{ backgroundColor: '#065B87', width: '100%',height: 150, borderBottomLeftRadius: 20,borderBottomRightRadius: 20,
             display: 'flex',
             flexDirection: 'row',
           }}>

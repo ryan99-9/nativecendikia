@@ -4,20 +4,28 @@ import {
   ScrollView,
   View,
   Image,
-  TouchableOpacity,
-  ImageBackground,
+  TouchableOpacity
 } from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
-// import axios from "axios";
-
+import {TextInput} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Axios from 'axios'
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       secure: true,
-      eye:require('../asset/close_eyes.png')
+      eye:require('../asset/close_eyes.png'),
+      email:"",
+      password:""
+      // token:AsyncStorage.getItem('token')
     };
   }
+  componentDidMount () {
+    AsyncStorage.getItem('test',(err,res)=>{
+      console.log(res);
+    })
+  }
+
   onEye = () => {
     if(this.state.secure){
       this.setState({secure: false})
@@ -28,36 +36,45 @@ class Home extends Component {
     }
   };
 
+  onAdd = () => {
+    let login = {
+      email : this.state.email,
+      password : this.state.password,
+    }
+    Axios.post(`https://admin.menujudigital.com/api/login`, login) 
+    .then(async (res) =>{
+      console.log(res.data);
+      await AsyncStorage.setItem('token', res.data.token); 
+      await AsyncStorage.setItem('email', res.data.email);
+      await AsyncStorage.setItem('name', res.data.name);
+      alert('sukses login') 
+      // this.props.navigation.navigate('HOME')
+    })
+    .catch(err => {console.log(err);alert('Masukan email dan password yang terdaftar')})
+  }
+  test =async()=>{ 
+    await AsyncStorage.setItem('test','uji coba set item')
+    console.log('Test Function');
+  }
+  getData =async()=>{ 
+    const value = await AsyncStorage.getItem('token')
+    console.log(value);
+  }
   render() {
     return (
       <ScrollView>
         <View
-          style={{
-            width: '100%',
-            height: '100%',
-            alignItems: 'center',
-            padding: 10,
-            marginTop: '50%',
-            // backgroundColor:'white'
-          }}>
+          style={{ width: '100%', height: '100%',alignItems: 'center', padding: 10,marginTop: '50%'}}>
             <View style={{
-              borderColor:'#065B87', borderWidth:1,
-              width:'100%',
-              alignItems:'center',
-              padding:20,
-              borderRadius:20,
-            }}>
+              borderColor:'#065B87', borderWidth:1,width:'100%',alignItems:'center',padding:20,borderRadius:20}}>
           <TextInput
-            label="Nama"
-            mode="outlined"
-            placeholder="tuliskan nama"
+            onChangeText={email=>this.setState({email})}
+            label="Nama" mode="outlined" placeholder="Email"
             style={{width: '90%', justifyContent: 'center', marginBottom: 10}}
           />
           <TextInput
-            label="Password"
-            mode="outlined"
-            placeholder="tuliskan Password"
-            secureTextEntry={this.state.secure}
+            onChangeText={password=>this.setState({password})}
+            label="Password" mode="outlined" placeholder="tuliskan Password" secureTextEntry={this.state.secure}
             style={{width: '90%', justifyContent: 'center', marginBottom: 10}}
             right={
               <TextInput.Icon
@@ -73,19 +90,17 @@ class Home extends Component {
           />
            <TouchableOpacity
             style={{
-              width: '90%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 10,
-              borderRadius: 20,
+              width: '90%', justifyContent: 'center', alignItems: 'center',padding: 10,borderRadius: 20,
               backgroundColor: '#065B87',
               marginTop:30,
               borderColor:'#065B87', borderWidth:1
             }}
-            onPress={() => this.props.navigation.navigate('HOME')}
+            onPress={this.onAdd}
             >
             <Text style={{color:'white'}}>Masuk</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={this.test} ><Text>TEST BUTTON</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this.getData} ><Text>Get Test</Text></TouchableOpacity>
             </View>
         </View>
       </ScrollView>

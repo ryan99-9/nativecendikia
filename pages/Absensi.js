@@ -6,29 +6,65 @@ import {
   TouchableOpacity
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
-// import axios from "axios";
+// import Axios from 'axios';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      secure: true,
-      eye:require('../asset/close_eyes.png')
+      token:localStorage.getItem('token'), nama_siswa: "",
+      nama_pengajar:"",
+      id_pengajar:null,
+      id_siswa:null,
+      nama_orangtua:"",
+      regional:"",
+      durasi_lembur:null,
+      biaya_fotokopi:null,
+      tagihan_siswa:null,
+      biaya_pendaftaran:null,
+      fee_pengajar:null,
+      realisasi_tagihan_siswa:null,
+      realisasi_fee_pengajar:null,
+      realisasi_biaya_pendaftaran:null,
     };
   }
 
-
+  onAdd = () => {
+    let tambahbiaya = {
+      id_pengajar : this.state.id_pengajar,id_siswa : this.state.id_siswa, nama_pengajar : this.state.nama_pengajar, nama_siswa : this.state.nama_siswa,
+      nama_orangtua : this.state.nama_orangtua,
+      regional : this.state.regional,
+      durasi_lembur : this.state.durasi_lembur,
+      biaya_fotokopi : this.state.biaya_fotokopi,
+      tagihan_siswa : this.state.tagihan_siswa,
+      biaya_pendaftaran : this.state.biaya_pendaftaran,
+      fee_pengajar : this.state.fee_pengajar,
+      realisasi_tagihan_siswa : this.state.realisasi_tagihan_siswa,
+      realisasi_biaya_pendaftaran : this.state.realisasi_biaya_pendaftaran,
+      realisasi_fee_pengajar : this.state.realisasi_fee_pengajar,
+    }
+    // Axios.post(`https://admin.menujudigital.com/api/biaya`, tambahbiaya, {
+    //   headers: {
+    //     Authorization: `Bearer ${this.state.token}`,
+    //   }
+    // }) .then((res) => console.log(res.data))
+  }
   render() {
     return (
       <ScrollView>
         <View style={{width: '100%', height: '100%',  alignItems: 'center', padding: 10, marginTop: '50%',}}>
             <View style={{ borderColor:'#8E220D', borderWidth:1, width:'100%', alignItems:'center', padding:20}}>
-          <TextInput 
-          label="Nama Siswa" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
-           
+          <TextInput onChangeText={nama_siswa=>this.setState({nama_siswa})} label="Nama Siswa" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
+          <TextInput onChangeText={nama_orangtua=>this.setState({nama_orangtua})} label="Nama Orang Tua" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
+          <TextInput onChangeText={id_siswa=>this.setState({id_siswa})} label="Id Siswa" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
+          <TextInput onChangeText={nama_pengajar=>this.setState({nama_pengajar})} label="Nama Pengajar" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
+          <TextInput onChangeText={id_pengajar=>this.setState({id_pengajar})} label="Id Pengajar" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
+          <TextInput onChangeText={regional=>this.setState({regional})} label="Regional" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
+          <TextInput onChangeText={biaya_fotokopi=>this.setState({biaya_fotokopi})} label="Biaya Fotokopi" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
+          <TextInput onChangeText={durasi_lembur=>this.setState({durasi_lembur})} label="Durasi Lembur" mode="outlined" placeholder="tuliskan nama" outlineColor='#8E220D'  activeOutlineColor='#8E220D' placeholderTextColor='#8E220D' style={{width: '90%', justifyContent: 'center', marginBottom: 10}}/>
            <TouchableOpacity
             style={{ width: '90%', borderColor:'#8E220D', borderWidth:1,justifyContent: 'center', alignItems: 'center',  marginTop:30, padding: 10,  borderRadius: 20, backgroundColor: '#8E220D'}}
-            onPress={() => this.props.navigation.navigate('HOME')} >
+            onPress={this.onAdd} >
             <Text style={{color:'white'}}>Submit Presence</Text></TouchableOpacity>
             </View>
         </View>

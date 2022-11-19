@@ -21,10 +21,29 @@ import Absensi from './pages/Absensi';
 import Apply from './pages/Apply';
 import Pengumumanapply from './pages/Pengumumanapply';
 import Financial from './pages/Financial';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
 const App = () => {
+  if(false){
+    return (
+      <NavigationContainer>
+        <Stack.Navigator 
+        initialRouteName="Splashscreen"
+        >
+          <Stack.Screen name="HOME" component={Home} options={{headerShown:false}}/>
+          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="Absensi" component={Absensi} />
+          <Stack.Screen name="Apply" component={Apply} />
+          <Stack.Screen name="Intro" component={Intro} options={{headerShown:false}} />
+          <Stack.Screen name="Pengumumanapply" component={Pengumumanapply} />
+          <Stack.Screen name="Financial" component={Financial} />
+          <Stack.Screen name="Splashscreen" component={SplashScreen} options={{headerShown:false}} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator 

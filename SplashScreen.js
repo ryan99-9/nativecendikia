@@ -1,14 +1,16 @@
 import { StackActions } from "@react-navigation/native";
 import React, {Component} from "react";
 import { View, Image} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 class Splash extends Component{
 
     componentDidMount(){
-        setTimeout(()=>{
-            this.props.navigation.dispatch(StackActions.replace('Intro'))
-        },3000)
+      AsyncStorage.getItem('token',(err,res)=>{
+        if(!res){setTimeout(()=>{this.props.navigation.dispatch(StackActions.replace('Intro'))},3000)}
+        else{setTimeout(()=>{this.props.navigation.dispatch(StackActions.replace('HOME'))},3000)}   
+      })
     }
 
   render(){
