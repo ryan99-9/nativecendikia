@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
 import {Text, View, Image, Button, TouchableOpacity} from 'react-native';
-import {IconButton} from 'react-native-paper';
 // import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 class Intro extends Component {
+  componentDidMount(){
+    AsyncStorage.getItem('token',(err,res)=>{
+      console.log(`intro token: ${res}`);  
+    })
+  }
   render() {
     return (
       <View>

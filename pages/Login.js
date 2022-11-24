@@ -21,8 +21,8 @@ class Home extends Component {
     };
   }
   componentDidMount () {
-    AsyncStorage.getItem('test',(err,res)=>{
-      console.log(res);
+    AsyncStorage.getItem('token',(err,res)=>{
+      console.log(`login token : ${res}`);
     })
   }
 
@@ -42,24 +42,17 @@ class Home extends Component {
       password : this.state.password,
     }
     Axios.post(`https://admin.menujudigital.com/api/login`, login) 
-    .then(async (res) =>{
-      console.log(res.data);
-      await AsyncStorage.setItem('token', res.data.token); 
-      await AsyncStorage.setItem('email', res.data.email);
-      await AsyncStorage.setItem('name', res.data.name);
-      alert('sukses login') 
-      // this.props.navigation.navigate('HOME')
-    })
-    .catch(err => {console.log(err);alert('Masukan email dan password yang terdaftar')})
+    .then(res =>{
+      console.log(`data login :${res.data.log.id}`);
+      AsyncStorage.setItem('token', res.data.token); 
+      AsyncStorage.setItem('email', res.data.log.email);
+      AsyncStorage.setItem('name', res.data.log.name);
+      AsyncStorage.setItem('id', res.data.log.id.toString());
+      alert('sukses login'); 
+      this.props.navigation.navigate('HOME')
+    }).catch(err => {console.log(err);alert('Masukan email dan password yang terdaftar')})
   }
-  test =async()=>{ 
-    await AsyncStorage.setItem('test','uji coba set item')
-    console.log('Test Function');
-  }
-  getData =async()=>{ 
-    const value = await AsyncStorage.getItem('token')
-    console.log(value);
-  }
+  
   render() {
     return (
       <ScrollView>
@@ -69,7 +62,7 @@ class Home extends Component {
               borderColor:'#065B87', borderWidth:1,width:'100%',alignItems:'center',padding:20,borderRadius:20}}>
           <TextInput
             onChangeText={email=>this.setState({email})}
-            label="Nama" mode="outlined" placeholder="Email"
+            label="Email" mode="outlined" placeholder="Email"
             style={{width: '90%', justifyContent: 'center', marginBottom: 10}}
           />
           <TextInput
@@ -99,8 +92,6 @@ class Home extends Component {
             >
             <Text style={{color:'white'}}>Masuk</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.test} ><Text>TEST BUTTON</Text></TouchableOpacity>
-          <TouchableOpacity onPress={this.getData} ><Text>Get Test</Text></TouchableOpacity>
             </View>
         </View>
       </ScrollView>
